@@ -1,47 +1,53 @@
 package dc.on.persona_predictor.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Date;
 
 @Entity
-@Table(name="user_info", schema = "persona_predictor")
+@Table(name="jobs_inventory", schema = "persona_predictor")
 @Getter
 @Setter
 public class JobDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Integer jobId;
+    @Column(name = "job_id")
+    public Integer job_id;
 
-    @Lob
+
     @Column(name = "job_description", columnDefinition = "TEXT")
-    private String jobDescription;
+    public String job_description;
 
     @Column(name = "deadline")
-    private Date deadline;
+    public Date deadline;
 
     @Column(name = "organization")
-    private String organization;
+    public String organization;
 
     @Column(name = "type")
-    private String type;
+    public String type;
 
     @Column(name = "status")
-    private String status;
+    public String status;
+
+    @Column(name="job_title")
+    public String job_title;
+
+
 
 
 
 //    CREATE TABLE persona_predictor.job_details (
 //    jobId SERIAL PRIMARY KEY,
+//    job_title VARCHAR(50),
 //    job_description TEXT NOT NULL,
-//    deadline DATE,
 //    organization VARCHAR(50),
-//    type VARCHAR(20),
-//    status VARCHAR(10)
+//    deadline DATE,
+//    status VARCHAR(10),
+//
+//    type VARCHAR(20)
+//
 //);
 }

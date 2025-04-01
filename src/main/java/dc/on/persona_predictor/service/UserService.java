@@ -4,7 +4,6 @@ import dc.on.persona_predictor.entity.JobDetails;
 import org.springframework.stereotype.Service;
 import dc.on.persona_predictor.entity.UserInfo;
 
-import java.util.List;
 
 
 @Service
