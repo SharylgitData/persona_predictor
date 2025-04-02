@@ -1,28 +1,16 @@
 package dc.on.persona_predictor.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dc.on.persona_predictor.constants.Constant;
 import dc.on.persona_predictor.entity.*;
 import dc.on.persona_predictor.repository.UserDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
-
 import dc.on.persona_predictor.dao.UserDao;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
 
 @Service

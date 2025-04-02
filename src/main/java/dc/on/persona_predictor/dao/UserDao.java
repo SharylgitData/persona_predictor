@@ -8,10 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class UserDao {
@@ -98,7 +97,14 @@ public class UserDao {
             Integer user = userData.updateTest(emailId, isGiven);
 
             PersonalityType personalityType = new PersonalityType(dominantPersonality, emailId);
-            personalityTestRepository.save(personalityType);
+
+            //get the personality for the email id if exists
+            String personality = personalityTestRepository.getPersonality(emailId);
+
+            if(Optional.ofNullable(personality).isPresent())
+                personalityTestRepository.updateUserPersonality(dominantPersonality, emailId);
+            else
+                personalityTestRepository.save(personalityType);
 
             if (personalityType != null && personalityType.id > 0) {
                 return "Personality of email-Id- " + emailId + " has been saved successfully";

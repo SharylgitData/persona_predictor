@@ -47,12 +47,12 @@ public class AsyncService {
                 body.add("job_title", job_title);
                 body.add("job_description", job_description);
                 HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-                String pythonServiceUrl = "http://localhost:8000/uploadPdf";
+                String pythonServiceUrl = "https://python-cv-analyzer.onrender.com/uploadPdf";
 
                 RestTemplate restTemplate = new RestTemplate();
                 ResponseEntity<Map<String, Object>> response = restTemplate.exchange(pythonServiceUrl, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
                 });
-                logger.info("The rsponse is "+response);
+                logger.info("The response is "+response);
                 logger.info("the end of response");
                 storeResponse(response, jobId, emailId);
                 Map<String, Object> res = response.getBody();
