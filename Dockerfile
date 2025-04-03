@@ -15,4 +15,4 @@ ENV PORT=8080
 EXPOSE 8080
 
 # Run the Spring Boot application
-CMD ["java", "-jar", "app.jar"]
+CMD java -jar app.jar
