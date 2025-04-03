@@ -1,27 +1,20 @@
 # Stage 1: Build the JAR using Gradle
 FROM gradle:8.12.1-jdk21 AS builder
 
+
 WORKDIR /app
 
-# Copy only necessary files for dependency caching
-COPY build.gradle settings.gradle gradlew ./
-COPY gradle ./gradle
-
-# Fetch dependencies (caches this layer)
-RUN ./gradlew build || return 0
-
-# Now copy the full source code
+# Copy everything (including build.gradle)
 COPY . .
 
-# Build the application
-RUN ./gradlew clean build
+# Force rebuild with clean environment
+RUN ./gradlew clean build --no-daemon
 
-# Stage 2: Run the app using a slim Java image
-FROM openjdk:17-jdk-slim
+# Stage 2: Use lightweight JDK image to run app
+FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 
-# Copy the generated fat JAR from builder stage
 COPY --from=builder /app/build/libs/persona_predictor-0.0.1-SNAPSHOT.jar app.jar
 
 ENV PORT=8080
