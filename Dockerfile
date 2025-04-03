@@ -1,18 +1,30 @@
+# Stage 1: Build the JAR using Gradle
+FROM gradle:7.6.1-jdk17 AS builder
 
-# Use official lightweight OpenJDK image
-FROM openjdk:17-jdk-slim
-
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the built JAR file into the container
-COPY build/libs/persona_predictor-0.0.1-SNAPSHOT.jar app.jar
+# Copy only necessary files for dependency caching
+COPY build.gradle settings.gradle gradlew ./
+COPY gradle ./gradle
 
-# Set environment variable for PORT (default to 8080 if not provided)
+# Fetch dependencies (caches this layer)
+RUN ./gradlew build || return 0
+
+# Now copy the full source code
+COPY . .
+
+# Build the application
+RUN ./gradlew clean build
+
+# Stage 2: Run the app using a slim Java image
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Copy the generated fat JAR from builder stage
+COPY --from=builder /app/build/libs/persona_predictor-0.0.1-SNAPSHOT.jar app.jar
+
 ENV PORT=8080
-
-# Expose the port (Render scans this)
 EXPOSE 8080
 
-# Run the Spring Boot application
-CMD java -jar app.jar
+CMD ["java", "-jar", "app.jar"]
