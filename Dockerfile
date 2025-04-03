@@ -1,22 +1,18 @@
-# Use a lightweight OpenJDK image
+
+# Use official lightweight OpenJDK image
 FROM openjdk:17-jdk-slim
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Gradle wrapper and related files
-COPY gradlew .
-COPY gradle/ gradle/
-COPY build.gradle .
-COPY settings.gradle .
-
-# Copy the rest of the app
-COPY src/ src/
+# Copy the built JAR file into the container
 COPY build/libs/persona_predictor-0.0.1-SNAPSHOT.jar app.jar
 
-# Set the port Render expects (via $PORT)
+# Set environment variable for PORT (default to 8080 if not provided)
 ENV PORT=8080
+
+# Expose the port (Render scans this)
 EXPOSE 8080
 
-# Run the application
+# Run the Spring Boot application
 CMD ["java", "-jar", "app.jar"]
