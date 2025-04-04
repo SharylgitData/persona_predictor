@@ -24,7 +24,7 @@ public class ResumeInfo {
     private int rank;
 
 
-    @Column(name = "entities", length = 5000)
+    @Column(name = "entities", length = 10000)
     private String user_entities;
 
     @Column(name = "job_id")
