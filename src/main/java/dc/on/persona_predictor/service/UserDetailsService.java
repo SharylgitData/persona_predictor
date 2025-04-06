@@ -154,5 +154,13 @@ public class UserDetailsService {
             return ResponseEntity.ok(resumeInfo);
         return new ResponseEntity<>(resumeInfo, HttpStatus.BAD_REQUEST);
     }
+
+    public ResponseEntity<List<CandidateApplication>> getCandidateApplication(String emailId) {
+        List<CandidateApplication> candidateApplications;
+        candidateApplications = userDao.getApplicationsFiled(emailId);
+        if(!candidateApplications.isEmpty())
+            return ResponseEntity.ok(candidateApplications);
+        return new ResponseEntity<>(candidateApplications, HttpStatus.BAD_REQUEST);
+    }
 }
 

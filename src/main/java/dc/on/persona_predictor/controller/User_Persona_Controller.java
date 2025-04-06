@@ -86,4 +86,10 @@ public class User_Persona_Controller {
         ResponseEntity<List<ResumeInfo>> getUsers =  userDetails.getAppliedUsersInfo(jobId);
         return getUsers;
     }
+
+    @GetMapping(value = "/candidateapp/{emailId}")
+    public ResponseEntity<List<CandidateApplication>> getCandidateApplication(@PathVariable("emailId") String emailId){
+        ResponseEntity<List<CandidateApplication>> jobsFiled =  userDetails.getCandidateApplication(emailId);
+        return jobsFiled;
+    }
 }

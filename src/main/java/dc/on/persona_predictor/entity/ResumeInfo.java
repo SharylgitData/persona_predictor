@@ -33,6 +33,9 @@ public class ResumeInfo {
     @Column(name = "email_id", length = 100)
     private String jobseeker_email_id;
 
+    @Column(name = "improvement_area", length = 10000)
+    private String improvement_area;
+
     // Constructors
     public ResumeInfo() {}
 
@@ -79,6 +82,9 @@ public class ResumeInfo {
         this.jobseeker_email_id = jobseeker_email_id;
     }
 
+    public void setImprovement_area(String improvement_area) {
+        this.improvement_area = improvement_area;
+    }
 
     @Override
     public String toString() {

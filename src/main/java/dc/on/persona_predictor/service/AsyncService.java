@@ -48,7 +48,7 @@ public class AsyncService {
                 body.add("job_description", job_description);
                 HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
                 String pythonServiceUrl = "https://python-cv-analyzer.onrender.com/uploadPdf";
-
+                //String pythonServiceUrl = "http://localhost:8000/uploadPdf";
                 RestTemplate restTemplate = new RestTemplate();
                 ResponseEntity<Map<String, Object>> response = restTemplate.exchange(pythonServiceUrl, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, Object>>() {
                 });
@@ -72,6 +72,7 @@ public class AsyncService {
             resumeInfo.setName(Optional.ofNullable(pythonResponse.get("name")).isPresent()? pythonResponse.get("name").toString() : null);
             resumeInfo.setRankReason(Optional.ofNullable(pythonResponse.get("reason")).isPresent() ? pythonResponse.get("reason").toString() :  null);
             resumeInfo.setRank(Optional.ofNullable(pythonResponse.get("rank")).isPresent() ? Integer.parseInt(pythonResponse.get("rank").toString()) : null);
+            resumeInfo.setImprovement_area(Optional.ofNullable(pythonResponse.get("area_of_improvement")).isPresent() ? pythonResponse.get("area_of_improvement").toString() :  "");
             resumeInfo.setJob_id(Integer.parseInt(jobId));
             resumeInfo.setJobseeker_email_id(emailId);
             ObjectMapper mapper = new ObjectMapper();

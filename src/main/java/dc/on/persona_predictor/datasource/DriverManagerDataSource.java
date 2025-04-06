@@ -6,6 +6,8 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import javax.sql.DataSource;
 
 public class DriverManagerDataSource{
@@ -20,7 +22,7 @@ public class DriverManagerDataSource{
 
     @Bean(name ="PostgreSQL")
     @Primary
-    public static DataSource PostgreSQLDataSource()
+    public static DataSource postgreSQLDataSource()
     {
 
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
@@ -32,5 +34,10 @@ public class DriverManagerDataSource{
     //@Override
     public void setEnvironment( final Environment environment) {
         env=environment;
+    }
+
+    @Bean(name="jdbcTemplate")
+    public JdbcTemplate jdbcTemplate(){
+        return new JdbcTemplate(postgreSQLDataSource());
     }
 }

@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,11 @@ public class UserDao {
 
     @Autowired
     private Resume_Info_Repository resumeInfoRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+
 
     public UserInfo isValideUser(String emailId, String password) {
         try {
@@ -157,5 +163,16 @@ public class UserDao {
             logger.error("Error while finding the details of the applied candidates for the job id {} . The error is {}" ,jobId, e.getMessage());
         }
         return null;
+    }
+
+    public List<CandidateApplication> getApplicationsFiled(String emailId){
+        String sql = String.join(" ",
+                "SELECT js.job_id, jin.organization, jin.job_title, js.rank, js.improvement_area",
+                "FROM persona_predictor.jobseeker_resume_info js",
+                "JOIN persona_predictor.jobs_inventory jin ON js.job_id = jin.job_id",
+                "WHERE js.email_id = ?",
+                "ORDER BY js.rank"
+        );
+        return jdbcTemplate.query(sql, new Object[]{emailId}, new CandidateApplicationMapper());
     }
 }
