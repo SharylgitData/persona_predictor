@@ -1,6 +1,8 @@
 package dc.on.persona_predictor.controller;
 
 import dc.on.persona_predictor.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/resume")
 public class User_Persona_Controller {
+    
+    Logger logger = LoggerFactory.getLogger(User_Persona_Controller.class);
 
    @Autowired
    UserDetailsService userDetails;
@@ -25,7 +29,7 @@ public class User_Persona_Controller {
     @PostMapping("/signUp")
     public Map<String, String> storeInfo(@RequestBody UserInfo userInfo){
 
-        System.out.println("User data is " +userInfo);
+        logger.info("User data is " +userInfo);
         Map<String, String> result = new  HashMap<>();
         result.put("result",  userDetails.signUp(userInfo));
 
@@ -34,14 +38,14 @@ public class User_Persona_Controller {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<JobDetailsTypes>> userLogin(@RequestBody UserInfo userInfo){
-        System.out.println("welcome to  login api point"+ userInfo);
+        logger.info("welcome to  login api point"+ userInfo);
         ResponseEntity<ApiResponse<JobDetailsTypes>> jd = userDetails.getDetails(userInfo);
         return jd;
     }
 
     @PostMapping("/sendJobRequest")
     public ResponseEntity<?> employerJdReq(@RequestBody JobDetails jobPostRequest){
-        System.out.println("request to send to admin is "+ jobPostRequest);
+        logger.info("request to send to admin is "+ jobPostRequest);
 
         ResponseEntity<ApiResponse<String>> draft = userDetails.saveJdRequest(jobPostRequest);
         return  draft;

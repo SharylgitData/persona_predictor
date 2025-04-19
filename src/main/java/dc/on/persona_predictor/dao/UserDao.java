@@ -175,4 +175,6 @@ public class UserDao {
         );
         return jdbcTemplate.query(sql, new Object[]{emailId}, new CandidateApplicationMapper());
     }
+
+
 }
