@@ -88,14 +88,16 @@ public class ResumeInfo {
 
     @Override
     public String toString() {
-        return "ResumeInfo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", rankReason='" + rankReason + '\'' +
-                ", rank=" + rank +
-                ", job_id=" + job_id +
-                ", jobseeker_email_id='" + jobseeker_email_id + '\'' +
-                '}';
+        return  new StringBuilder("")
+                .append("ResumeInfo{")
+                .append("id=").append(id)
+                .append(", name='").append(name).append('\'')
+                .append(", rankReason='").append(rankReason).append('\'')
+                .append(", rank=").append(rank)
+                .append(", job_id=").append(job_id)
+                .append(", jobseeker_email_id='").append(jobseeker_email_id).append('\'')
+                .append('}')
+                .toString();
     }
 }
 

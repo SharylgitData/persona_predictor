@@ -1,5 +1,6 @@
 package dc.on.persona_predictor.config;
 
+import dc.on.persona_predictor.constants.Constant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,12 +16,9 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 
@@ -31,13 +29,14 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
+        //   config.setAllowedOrigins(List.of(Constant.CROSS_ORIGIN));
+        config.setAllowedOrigins(List.of("http://localhost:3000/"));
+        config.setAllowedMethods(List.of(Constant.HTTP_GET, Constant.HTTP_POST, Constant.HTTP_PUT, Constant.HTTP_DELETE, Constant.HTTP_OPTIONS));
+        config.setAllowedHeaders(List.of(Constant.ASTRICK));
         config.setAllowCredentials(false);  // Set to true if credentials (cookies, auth headers) are needed
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration(Constant.PATH_MATCH_ALL, config);
         return source;
     }
 }

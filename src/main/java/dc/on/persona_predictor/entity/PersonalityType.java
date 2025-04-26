@@ -1,17 +1,19 @@
 package dc.on.persona_predictor.entity;
 
+import dc.on.persona_predictor.constants.Constant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.bcel.Const;
 
 @Entity
-@Table(name="personality", schema = "persona_predictor")
+@Table(name="personality", schema = Constant.SCHEMA_PERSONA_PREDICTOR)
 public class PersonalityType {
 
     @Column(name="email_id")
-    public String email_id;
+    private String email_id;
 
     @Column(name="personality")
-    public String personality;
+    private String personality;
 
     @Id
     @Column(name="id")

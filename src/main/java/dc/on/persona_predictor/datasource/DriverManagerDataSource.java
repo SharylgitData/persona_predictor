@@ -1,6 +1,7 @@
 package dc.on.persona_predictor.datasource;
 
 
+import dc.on.persona_predictor.constants.Constant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -11,16 +12,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 public class DriverManagerDataSource{
-    @Value("${env}")
+    @Value(Constant.PROP_ENV)
     private static Environment env;
 
-    @Value("${spring.datasource.driver")
+    @Value(Constant.PROP_DATASOURCE_DRIVER)
     private static String driver;
 
-    @Value("${spring.datasource.url}")
+    @Value(Constant.PROP_DATASOURCE_URL)
     private static String url;
 
-    @Bean(name ="PostgreSQL")
+    @Bean(name = Constant.BEAN_POSTGRESQL)
     @Primary
     public static DataSource postgreSQLDataSource()
     {
@@ -36,7 +37,7 @@ public class DriverManagerDataSource{
         env=environment;
     }
 
-    @Bean(name="jdbcTemplate")
+    @Bean(name=Constant.BEAN_JDBCTEMPLATE)
     public JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(postgreSQLDataSource());
     }
